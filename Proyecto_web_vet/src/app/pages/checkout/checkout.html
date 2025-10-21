@@ -12,7 +12,21 @@
         </li>
       </ul>
       <hr>
-      <p class="total">Total: <strong>{{ total() | currency:'MXN' }}</strong></p>
+
+      <div class="summary-details">
+        <div class="summary-item">
+          <span>Subtotal:</span>
+          <span>{{ subtotal() | currency:'MXN' }}</span>
+        </div>
+        <div class="summary-item">
+          <span>IVA (16%):</span>
+          <span>{{ iva() | currency:'MXN' }}</span>
+        </div>
+        <div class="summary-item total">
+          <strong>Total:</strong>
+          <strong>{{ total() | currency:'MXN' }}</strong>
+        </div>
+      </div>
       
       <div *ngIf="payPalConfig" class="paypal-container">
         <ngx-paypal [config]="payPalConfig"></ngx-paypal>
@@ -29,4 +43,4 @@
     <h3>¡Gracias por tu compra!</h3>
     <p>Tu pago ha sido procesado exitosamente.</p>
   </div>
-</div>
+

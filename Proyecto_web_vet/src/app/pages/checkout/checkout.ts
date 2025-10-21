@@ -15,6 +15,7 @@ import { NgxPayPalModule, IPayPalConfig } from 'ngx-paypal';
 export class CheckoutComponent implements OnInit {
   items: CartItem[] = [];
   paid = false;
+  ivaRate = 0.16; // Tasa de IVA del 16%
 
   public payPalConfig?: IPayPalConfig;
 
@@ -26,16 +27,26 @@ export class CheckoutComponent implements OnInit {
     this.initConfig();
   }
 
-  total() {
-    return this.cart.getTotal();
+  subtotal(): number {
+    return this.cart.getTotal(); 
+  }
+
+  iva(): number {
+    return this.subtotal() * this.ivaRate;
+  }
+
+  total(): number {
+    return this.subtotal() + this.iva();
   }
 
   private initConfig(): void {
-    const totalAmount = this.total().toFixed(2);
-
     if (this.items.length === 0) {
       return;
     }
+
+    const subtotalAmount = this.subtotal().toFixed(2);
+    const ivaAmount = this.iva().toFixed(2);
+    const totalAmount = this.total().toFixed(2);
 
     this.payPalConfig = {
       currency: 'MXN',
@@ -45,11 +56,15 @@ export class CheckoutComponent implements OnInit {
         purchase_units: [{
           amount: {
             currency_code: 'MXN',
-            value: totalAmount,
+            value: totalAmount, 
             breakdown: {
-              item_total: {
+              item_total: { 
                 currency_code: 'MXN',
-                value: totalAmount
+                value: subtotalAmount
+              },
+              tax_total: {
+                currency_code: 'MXN',
+                value: ivaAmount
               }
             }
           },
@@ -66,14 +81,14 @@ export class CheckoutComponent implements OnInit {
       advanced: {
         commit: 'true'
       },
-      style: { 
+      style: {
         label: 'paypal',
         layout: 'vertical'
       },
       onClientAuthorization: (data) => {
         console.log('Pago completado:', data);
         this.paid = true;
-        this.generateReceiptXML(data); //aqui mandamos llamar la creacion del recibo xml, ya que se complete el pago
+        this.generateReceiptXML(data);
         this.cart.clear();
       },
       onCancel: (data, actions) => {
@@ -85,39 +100,43 @@ export class CheckoutComponent implements OnInit {
     };
   }
 
-  //preparar datos para el xml
   private generateReceiptXML(data: any) {
     const date = new Date().toISOString();
+
+    const subtotal = this.subtotal().toFixed(2);
+    const iva = this.iva().toFixed(2);
     const total = this.total().toFixed(2);
 
-    //estructura
     const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
 <recibo>
-  <tienda>Zeus Vet</tienda>
-  <transaccion>
-    <id>${data.id}</id>
-    <estado>${data.status}</estado>
+  <encabezado>
+    <tienda>Zeus Vet</tienda>
     <fecha>${date}</fecha>
-    <moneda>MXN</moneda>
-    <total>${total}</total>
-  </transaccion>
+    <idTransaccion>${data.id}</idTransaccion>
+    <estado>${data.status}</estado>
+  </encabezado>
   <cliente>
     <nombre>${data.payer?.name?.given_name || 'No especificado'}</nombre>
     <correo>${data.payer?.email_address || 'No especificado'}</correo>
   </cliente>
-  <productos>
+  <detalleProductos>
     ${this.items.map(item => `
     <producto>
       <nombre>${item.product.name}</nombre>
       <cantidad>${item.quantity}</cantidad>
-      <precioUnitario>${item.product.price}</precioUnitario>
-      <subtotal>${(item.quantity * parseFloat(item.product.price as any)).toFixed(2)}</subtotal>
+      <precioUnitario>${parseFloat(item.product.price as any).toFixed(2)}</precioUnitario>
+      <subtotalProducto>${(item.quantity * parseFloat(item.product.price as any)).toFixed(2)}</subtotalProducto>
     </producto>
     `).join('')}
-  </productos>
+  </detalleProductos>
+  <resumenFinanciero>
+    <moneda>MXN</moneda>
+    <subtotal>${subtotal}</subtotal>
+    <iva>${iva}</iva>
+    <total>${total}</total>
+  </resumenFinanciero>
 </recibo>`;
 
-    //tipo de archivo que estamos utilizando (xml)
     const blob = new Blob([xmlContent], { type: 'application/xml' });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -126,6 +145,6 @@ export class CheckoutComponent implements OnInit {
     a.click();
     window.URL.revokeObjectURL(url);
 
-    console.log('Recibo XML generado:', `Recibo_${data.id}.xml`);
+    console.log('Recibo generado:', `Recibo_${data.id}.xml`);
   }
 }

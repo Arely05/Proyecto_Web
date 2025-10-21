@@ -3,7 +3,7 @@ import { CommonModule, DecimalPipe, NgIf, NgFor } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { NavbarComponent } from '../../components/navbar/navbar';
 import { CartItem } from '../../models/cart-item';
-import { CartService } from '../../services/cart';  // <-- ajusta al nombre real
+import { CartService } from '../../services/cart';
 
 @Component({
   selector: 'app-cart',
@@ -16,7 +16,7 @@ export class CartComponent {
   items: CartItem[] = [];
 
   constructor(private cart: CartService) {
-    // Mantén el estado sincronizado
+   
     this.cart.items$?.subscribe?.(items => this.items = items) ?? (this.items = this.cart.items ?? []);
   }
 
