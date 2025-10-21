@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog>
+  <product id="p1">
+    <name>Shampoo Vetridarm</name>
+    <description>Volumen de la unidad 350 mL.
+    Shampoo Vetridem de Bayer ya que es ideal para los perritos con piel sensible que se irritan fácilmente con el uso de productos de limpieza comunes. Hidrata de manera profunda y protege la piel contra la resequedad. Puede ser recomendado para perros con algún tipo de alergia. También puedes utilizarlo como coadyuvante de infecciones por hongos y bacterias de la piel (piodermas), heridas, dermatitis alérgicas, trastornos de la queratinización, foliculitis y seborreas. Pelo saludable, libre de caspa, olor rico y limpieza eficaz.</description>
+    <price>1159.00</price>
+    <image>assets/img/ShampooVetriderm.jpg</image>
+  </product>
+
+  <product id="p2">
+    <name>Shampoo Microplex</name>
+    <description>Antimicótico y antibacterial con propiedad calmante para la prevención y tratamiento de infecciones dermatológicas mixtas asociadas a hongos, levaduras y bacterias gram positivas y gram negativas que cursan como prurito e inflamación.</description>
+    <price>300.00</price>
+    <image>assets/img/Microplex.jpg</image>
+  </product>
+
+  <product id="p3">
+    <name>Shampoo Lassy</name>
+    <description>Shampoo atiseborreico, queratolítico, antipruritico para perros. Dermolimpiador queratolítico y bacteriostático indicado para remover descamaciones, caspa, costras y secreciones de la piel asociadas con la seborrea. Tratamiento de la dermatitis pruriginosa, piel grasosa y caída del pelo en caninos. Cada 100 ml contienen: Azufre 2 g, ácido salicílico 2 g, acondicionadores y aromatizantes.</description>
+    <price>220.00</price>
+    <image>assets/img/Lassy.jpg</image>
+  </product>
+
+  <product id="p4">
+    <name>Shampoo Pramoxine</name>
+    <description>Antipruritíco, reestructurante e hidratante para perros, gatos y caballos.</description>
+    <price>200.00</price>
+    <image>assets/img/Pramoxine.jpg</image>
+  </product>
+
+  <product id="p5">
+    <name>Shampoo Omegaderm</name>
+    <description>Antipruritíco, reestructurante e hidratante para perros, gatos y caballos.</description>
+    <price>150.00</price>
+    <image>assets/img/Omegaderm.jpg</image>
+  </product>
+
+</catalog>

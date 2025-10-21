@@ -1,0 +1,7 @@
+.page { padding: 16px; }
+.alert { background: #e8f7ec; border: 1px solid #b9e5c7; color: #2c7a43; padding: 10px 12px; border-radius: 8px; margin-bottom: 12px; }
+.list { list-style: none; padding: 0; }
+.list li { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed #eee; }
+.total { margin-top: 12px; font-size: 1.1rem; }
+button { margin-top: 12px; padding: 10px 14px; background: #111; color: #fff; border: none; border-radius: 8px; cursor: pointer; }
+button:hover { opacity: .9; }

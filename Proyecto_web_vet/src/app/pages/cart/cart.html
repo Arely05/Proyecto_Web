@@ -1,0 +1,41 @@
+<app-navbar></app-navbar>
+
+<div class="page">
+  <h2>Carrito</h2>
+
+  <div *ngIf="!items.length">Vacío.</div>
+
+  <div class="table" *ngIf="items.length">
+    <div class="row header">
+      <div>Producto</div>
+      <div>Precio</div>
+      <div>Cantidad</div>
+      <div>Subtotal</div>
+      <div></div>
+    </div>
+
+    <div class="row" *ngFor="let i of items">
+      <div class="prod">
+        <img [src]="i.product.image" [alt]="i.product.name">
+        <div>
+          <div class="name">{{ i.product.name }}</div>
+          <div class="desc">{{ i.product.description }}</div>
+        </div>
+      </div>
+      <div>${{ i.product.price | number:'1.2-2' }}</div>
+      <div>
+        <input type="number" min="0" [value]="i.quantity" (input)="updateQty(i.product.id, $any($event.target).value)">
+      </div>
+      <div>${{ (i.product.price * i.quantity) | number:'1.2-2' }}</div>
+      <div><button (click)="remove(i.product.id)">Eliminar</button></div>
+    </div>
+
+    <div class="row total">
+      <div></div><div></div><div>Total:</div>
+      <div class="sum">${{ total() | number:'1.2-2' }}</div>
+      <div></div>
+    </div>
+
+    <a routerLink="/checkout" class="checkout">Ir al pago</a>
+  </div>
+</div>

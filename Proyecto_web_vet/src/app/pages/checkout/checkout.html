@@ -1,0 +1,32 @@
+<app-navbar></app-navbar>
+
+<div class="page">
+  <h2>Resumen y Pago</h2>
+
+  <div *ngIf="!paid">
+    
+    <div *ngIf="items.length > 0; else emptyCart">
+      <ul>
+        <li *ngFor="let item of items">
+          {{ item.product.name }} ({{ item.quantity }} x {{ item.product.price | currency:'MXN' }})
+        </li>
+      </ul>
+      <hr>
+      <p class="total">Total: <strong>{{ total() | currency:'MXN' }}</strong></p>
+      
+      <div *ngIf="payPalConfig" class="paypal-container">
+        <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+      </div>
+    </div>
+
+    <ng-template #emptyCart>
+      <p>Tu carrito está vacío. ¡Añade productos para poder pagar!</p>
+    </ng-template>
+
+  </div>
+
+  <div *ngIf="paid" class="success-message">
+    <h3>¡Gracias por tu compra!</h3>
+    <p>Tu pago ha sido procesado exitosamente.</p>
+  </div>
+</div>

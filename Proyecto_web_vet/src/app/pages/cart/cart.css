@@ -1,0 +1,17 @@
+.page { padding: 16px; }
+.table { width: 100%; border: 1px solid #eee; border-radius: 8px; overflow: hidden; }
+.row { display: grid; grid-template-columns: 1.5fr 0.6fr 0.6fr 0.7fr 0.4fr; gap: 12px; padding: 12px; border-bottom: 1px solid #f2f2f2; align-items: center; }
+.header { background: #fafafa; font-weight: 600; }
+.prod { display: flex; gap: 10px; align-items: center; }
+.prod img { width: 64px; height: 64px; object-fit: cover; border-radius: 6px; }
+.name { font-weight: 600; }
+.desc { font-size: 0.85rem; color: #666; }
+.total { font-weight: 700; }
+.sum { font-size: 1.1rem; }
+.checkout {
+  display: inline-block; margin: 12px; padding: 10px 14px; background: #111; color: #fff;
+  border-radius: 8px; text-decoration: none;
+}
+button { padding: 6px 10px; border: none; border-radius: 6px; background: #e74c3c; color: #fff; cursor: pointer; }
+button:hover { opacity: .9; }
+input[type="number"] { width: 80px; padding: 6px; }
